@@ -1,25 +1,13 @@
-
+// src/components/Home.js
 import React from 'react';
-import {NavLink} from 'react-router-dom';
 
-const Home = () => {
+function Home() {
   return (
-    <>
-    <section style={{
-      backgroundColor:'royalblue',
-      width:'100%',
-      height:'90vh'
-    }}>
-     <div className="box">
-      
-      <h1>WELCOME TO REACT PROJECT</h1>
-      <NavLink to="/profile" className="btn btn-warning">Get Started</NavLink>
-     </div>
-      
-      
-      </section>      
-    </>
-  )
+    <div>
+      <h1>Welcome to Our Website</h1>
+      <p>This is the landing page of our website. Feel free to explore!</p>
+    </div>
+  );
 }
 
 export default Home;

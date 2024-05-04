@@ -1,53 +1,34 @@
-import React,{useState,useEffect} from 'react'
-import { useNavigate} from 'react-router-dom'
-import axios from 'axios';
+// src/components/UserProfile.js
+import React, { useState, useEffect } from 'react';
+import api from '../components/api';
 
-const Profile = () => {
-const [email, setEmail] = useState("")
-const [login, setLogin] = useState(false)
-
-const his=useNavigate();
-  axios.defaults.withCredentials = true;
+function UserProfile() {
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
-     const checkLogin= async ()=>{
-      let val= await axios.get("http://localhost:8000/login");
-      setLogin(val.data.login)
-      if(val.data.user)
-      {
-          //  console.log(val.data);
-         
-          setEmail(val.data.user[0].email)
+    async function fetchUserProfile() {
+      try {
+        const response = await api.get('/profile'); // Assuming endpoint for fetching user profile
+        setUser(response.data);
+      } catch (error) {
+        console.error('Error fetching user profile:', error);
       }
-      else{
-        his("/login")
-      }
-     }
-     checkLogin();
-  },[his, login])
+    }
+
+    fetchUserProfile();
+  }, []);
+
+  if (!user) {
+    return <div>Loading...</div>;
+  }
 
   return (
-    <>
-    <section style={{
-      backgroundColor:'royalblue',
-      width:'100%',
-      height:'90vh'
-    }}>
-     <div className="box">
-      
-      <h1>WELCOME TO REACT PROFILE</h1>
-      <p>
-        {
-          login ? email :null
-        }
-      </p>
-    
-     </div>
-      
-      
-      </section>      
-    </>
-  )
+    <div>
+      <h1>User Profile</h1>
+      <p>Username: {user.username}</p>
+      {/* Add other profile information here */}
+    </div>
+  );
 }
 
-export default Profile;
+export default UserProfile;
